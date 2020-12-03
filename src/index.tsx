@@ -22,12 +22,12 @@ function App() {
           <source src={source} type='video/mp4' />
         </video>
       )
-
     }
     return (
       <img onClick={generate} src={source} className='dog-image' alt='loading... maybe' />
     )
   }
+  
   window.onload = function () {
     generate()
   }
