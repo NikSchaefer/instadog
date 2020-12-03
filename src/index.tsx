@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 import axios from 'axios'
+import github from './github.svg'
 
 const fetch: string = 'https://random.dog/woof.json'
 function App() {
@@ -33,6 +34,9 @@ function App() {
   }
   return (
     <div className='home'>
+      <a href='https://github.com/NikSchaefer/Doggo'>
+        <img alt='github' src={github} />
+      </a>
       <File />
       <p onClick={generate} className='button'>More Doggos</p>
     </div>

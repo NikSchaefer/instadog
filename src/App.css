@@ -45,3 +45,9 @@ body {
   width: 90%;
   max-width: 800px;
 }
+
+a {
+  position: fixed;
+  top:10px;
+  left:10px
+}
