@@ -17,11 +17,16 @@ function App() {
   function File() {
     const fileType = source.substr(source.length - 3);
     if (fileType === 'mp4') {
-      return <video onClick={generate} className='dog-image' autoPlay loop muted>
-        <source src={source} type='video/mp4' />
-      </video>
+      return (
+        <video onClick={generate} className='dog-image' autoPlay loop muted>
+          <source src={source} type='video/mp4' />
+        </video>
+      )
+
     }
-    return <img onClick={generate} src={source} className='dog-image' alt='loading... maybe' />
+    return (
+      <img onClick={generate} src={source} className='dog-image' alt='loading... maybe' />
+    )
   }
   window.onload = function () {
     generate()
@@ -33,6 +38,7 @@ function App() {
     </div>
   );
 }
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
