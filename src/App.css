@@ -23,7 +23,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 .dog-image {
@@ -40,6 +39,7 @@ a {
   border: rgb(194, 194, 194) 1px solid;
   width: 90%;
   max-width: 500px;
+  margin: 40px 0;
 }
 
 .card-file {
