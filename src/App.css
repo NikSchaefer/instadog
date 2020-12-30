@@ -1,23 +1,8 @@
-@keyframes rainbow {
-  0% {
-    background-position: 0% 82%
-  }
-  50% {
-    background-position: 100% 19%
-  }
-  100% {
-    background-position: 0% 82%
-  }
-}
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
-  background-size: 1800% 1800%;
-  animation: rainbow infinite 18s;
 }
 
 .button {
@@ -42,12 +27,38 @@ body {
 }
 
 .dog-image {
-  width: 90%;
-  max-width: 800px;
+  width: 100%;
 }
 
 a {
-  position: fixed;
-  top:10px;
-  left:10px
+  color: inherit;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: rgb(194, 194, 194) 1px solid;
+  width: 90%;
+  max-width: 500px;
+}
+
+.card-file {
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  padding: 10px 0;
+}
+
+.card-bottom-div {
+  width: 90%;
+  margin: auto;
+  padding: 10px 0;
+}
+
+.third {
+  margin-left: auto;
 }
