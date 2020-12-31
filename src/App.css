@@ -105,6 +105,7 @@ a {
   padding: 20px 30px;
   font-size: 23px;
   display: flex;
+  flex-wrap: wrap;
   background-color: rgb(255, 255, 255);
 }
 

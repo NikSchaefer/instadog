@@ -15,11 +15,18 @@ interface data {
   isLiked: boolean,
   description: string
 }
-function ShareUI(props: { url: string, bool: boolean }) {
-  if (props.bool) {
+
+let lastRender = Date.now()
+function App() {
+
+  const [allData, setAllData] = useState<data[]>([])
+  const [shareURL, setShareURL] = useState<string>("http://localhost:3000/")
+  const [isActive, setActive] = useState<boolean>(false)
+
+  function ShareUI(props: { url: string }) {
     return (
       <div className="share-div" onClick={function () {
-        props.bool = false
+        setActive(false)
       }}>
         <div>
           <p id='copy-id'>{props.url}</p>
@@ -28,15 +35,6 @@ function ShareUI(props: { url: string, bool: boolean }) {
       </div>
     )
   }
-  return <></>
-}
-
-let isActive: boolean = false;
-let lastRender = Date.now()
-function App() {
-
-  const [allData, setAllData] = useState<data[]>([])
-  const [shareURL, setShareURL] = useState<string>("http://localhost:3000/")
 
   function Card(props: { src: data, iter: number }) {
     function Like(e: any) {
@@ -74,15 +72,10 @@ function App() {
         </svg>
       )
     }
-    function TopImg() {
-      const arrs = ['blue', 'red', 'yellow']
-      const num: number = Math.floor((Math.random() * arrs.length))
-      return <div style={{ backgroundColor: arrs[num] }} className='profile' />
-    }
     return (
       <div className="card">
         <div className='flex'>
-          <TopImg />
+          <div style={{ backgroundColor: 'blue' }} className='profile' />
           <p>{props.src.title}</p>
         </div>
         <Img source={props.src.img} />
@@ -93,8 +86,8 @@ function App() {
               <img src={github} alt='' />
             </div>
             <img onClick={function () {
-              isActive = true;
-              setShareURL(String(window.location.hostname + ':3000/' + '?share=' + encodeURIComponent(props.src.img.replace("https://random.dog/", ""))))
+              setActive(true)
+              setShareURL(String(window.location.hostname + ':3000/?share=' + encodeURIComponent(props.src.img.replace("https://random.dog/", ""))))
             }} className='right' src={share} alt='' />
           </div>
           <p>{props.src.description}</p>
@@ -144,10 +137,14 @@ function App() {
     }
   }
   window.onscroll = function () {
-    if ((window.innerHeight + window.scrollY + 1000) >= document.body.offsetHeight) {
-      if (Date.now() >= (lastRender + 250)) {
-        console.log('regen')
-        generate()
+    if ((window.innerHeight + window.scrollY + 2000) >= document.body.offsetHeight) {
+      if (Date.now() >= (lastRender + 10000)) {
+        for (let i = 0; i < 20; i++) {
+          if (allData.length > 100) {
+            // Delte old posts
+          }
+          generate()
+        }
         lastRender = Date.now()
       }
     }
@@ -156,7 +153,7 @@ function App() {
     <div className='home'>
       <SharePost />
       <Render arr={allData} />
-      <ShareUI url={shareURL} bool={isActive} />
+      { isActive ? <ShareUI url={shareURL} /> : <></>}
     </div>
   );
 }
