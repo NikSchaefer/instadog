@@ -27,6 +27,7 @@ body {
 
 .dog-image {
   width: 100%;
+  min-height: 100px;
 }
 
 a {
@@ -59,9 +60,10 @@ a {
 
 .card-bottom-left {
   display: flex;
-  margin-right: auto;
 }
-
+.right {
+  margin-left: auto;
+}
 .card-bottom-imgs {
   display: flex;
   width: 100%;

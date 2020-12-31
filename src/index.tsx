@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 import github from './github.svg'
 import share from './share.svg'
 import Axios from 'axios'
-const possibleTitles: string[] = [
-  "Doggo!",
-  "Look at this Doggo",
-  "They're sooo cute!",
-]
+const possibleTitles: string[] = ["Doggo!", "Look at this Doggo", "They're sooo cute!",]
 interface data {
   title: string,
   img: string,
   isLiked: boolean,
   description: string
 }
-
 let lastRender = Date.now()
 function App() {
-
-  const [allData, setAllData] = useState<data[]>([])
+  const [FeedData, setFeed] = useState<data[]>([])
   const [shareURL, setShareURL] = useState<string>("")
   const [isActive, setActive] = useState<boolean>(false)
 
@@ -56,13 +50,13 @@ function App() {
       const fileType = props.source.substr(props.source.length - 3);
       if (fileType === 'mp4') {
         return (
-          <video onDoubleClick={Like} className='dog-image' autoPlay loop muted>
+          <video preload='none' onDoubleClick={Like} className='dog-image' autoPlay loop muted>
             <source src={props.source} type='video/mp4' />
           </video>
         )
       }
       return (
-        <img onDoubleClick={Like} src={props.source} className='dog-image' alt='loading... maybe' />
+        <img loading='lazy' onDoubleClick={Like} src={props.source} className='dog-image' alt='loading... maybe' />
       )
     }
     function Heart(props: { value: boolean }) {
@@ -99,6 +93,7 @@ function App() {
               setShareURL(String(window.location.hostname + '/?share=' + encodeURIComponent(props.src.img.replace("https://random.dog/", ""))))
             }} className='right' src={share} alt='' />
           </div>
+          <p>89 Likes</p>
           <p>{props.src.description}</p>
         </div>
       </div>
@@ -111,47 +106,44 @@ function App() {
     }
     return out
   }
-  function generate() {
+  async function fetchNewPost() {
     const num: number = Math.floor((Math.random() * possibleTitles.length))
-    Axios.get('https://random.dog/woof.json').then(
-      res => {
-        const toAppend: data = {
-          title: possibleTitles[num],
-          img: res.data.url,
-          isLiked: false,
-          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto'
-        }
-        setAllData(old => [...old, toAppend])
-      })
+    const res = await Axios.get('https://random.dog/woof.json')
+    const toAppend: data = {
+      title: possibleTitles[num],
+      img: res.data.url,
+      isLiked: false,
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto'
+    }
+    setFeed(old => [...old, toAppend])
   }
-  function SharePost(): any {
+  function ShowSharedPost(): any {
     const Params = new URLSearchParams(window.location.search)
     const share = Params.get("share")
-    if (share === null) {
-      return <></>
+    if (share !== null) {
+      const data: data = {
+        title: 'Shared Post',
+        img: String('https://random.dog/' + decodeURIComponent(share)),
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto',
+        isLiked: true
+      }
+      return [<Card iter={0} src={data} />, <div style={{ margin: '200px 0' }} />]
     }
-    const data: data = {
-      title: 'Shared Post',
-      img: String('https://random.dog/' + decodeURIComponent(share)),
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto',
-      isLiked: true
-    }
-    return [<Card iter={0} src={data} />, <div style={{ margin: '200px 0' }} />]
+    return <></>
   }
-
   window.onload = function () {
     for (let i = 0; i < 30; i++) {
-      generate()
+      fetchNewPost()
     }
   }
   window.onscroll = function () {
     if ((window.innerHeight + window.scrollY + 2000) >= document.body.offsetHeight) {
       if (Date.now() >= (lastRender + 10000)) {
         for (let i = 0; i < 20; i++) {
-          if (allData.length > 100) {
+          if (FeedData.length > 100) {
             // Delte old posts
           }
-          generate()
+          fetchNewPost()
         }
         lastRender = Date.now()
       }
@@ -159,8 +151,8 @@ function App() {
   };
   return (
     <div className='home'>
-      <SharePost />
-      <Render arr={allData} />
+      <ShowSharedPost />
+      <Render arr={FeedData} />
       { isActive ? <ShareUI url={shareURL} /> : <></>}
     </div>
   );
