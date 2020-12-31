@@ -20,7 +20,7 @@ let lastRender = Date.now()
 function App() {
 
   const [allData, setAllData] = useState<data[]>([])
-  const [shareURL, setShareURL] = useState<string>("http://localhost:3000/")
+  const [shareURL, setShareURL] = useState<string>("")
   const [isActive, setActive] = useState<boolean>(false)
 
   function ShareUI(props: { url: string }) {
@@ -35,15 +35,22 @@ function App() {
       </div>
     )
   }
-
   function Card(props: { src: data, iter: number }) {
-    function Like(e: any) {
-      let temp = [...allData]
-      temp[props.iter].isLiked = !temp[props.iter].isLiked
-      setAllData(temp) // TODO:
 
-      e.target.style.animation = 'Like 1s'
-      setTimeout(function () { e.target.style.animation = null }, 1200);
+    const [isLiked, setLiked] = useState<boolean>(props.src.isLiked)
+
+    function Like(e: any) {
+      const heartsvg: any = document.getElementsByClassName('like')[props.iter]
+      if (isLiked) {
+        heartsvg.style.animation = 'UndoLike 0.4s forwards'
+      }
+      else {
+        heartsvg.style.animation = 'Like 0.4s forwards'
+      }
+      setTimeout(function () {
+        setLiked(!isLiked)
+      }, 400)
+
     }
     function Img(props: { source: string }) {
       const fileType = props.source.substr(props.source.length - 3);
@@ -59,14 +66,16 @@ function App() {
       )
     }
     function Heart(props: { value: boolean }) {
-      let color = '#000000'
-      let fill = 'none'
       if (props.value) {
-        color = "#ed4956"
-        fill = '#ed4956'
+        return (
+          <svg fill="#ed4956" stroke="#ed4956" className="like" onClick={Like} xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+          </svg>
+        )
       }
       return (
-        <svg className="like" onClick={Like} xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1" stroke={color} fill={fill} strokeLinecap="round" strokeLinejoin="round">
+        <svg fill="#ffffff" stroke='black' className="like" onClick={Like} xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
         </svg>
@@ -82,12 +91,12 @@ function App() {
         <div className="card-bottom">
           <div className='card-bottom-imgs'>
             <div className="card-bottom-left">
-              <Heart value={props.src.isLiked} />
+              <Heart value={isLiked} />
               <img src={github} alt='' />
             </div>
             <img onClick={function () {
               setActive(true)
-              setShareURL(String(window.location.hostname + ':3000/?share=' + encodeURIComponent(props.src.img.replace("https://random.dog/", ""))))
+              setShareURL(String(window.location.hostname + '/?share=' + encodeURIComponent(props.src.img.replace("https://random.dog/", ""))))
             }} className='right' src={share} alt='' />
           </div>
           <p>{props.src.description}</p>
@@ -98,7 +107,7 @@ function App() {
   function Render(props: { arr: data[] }): any {
     let out: any = []
     for (let i = 0; i < props.arr.length; i++) {
-      out.push(<Card key={props.arr[i].img} src={props.arr[i]} iter={i} />)
+      out.push(<Card key={i} src={props.arr[i]} iter={i} />)
     }
     return out
   }
@@ -113,7 +122,6 @@ function App() {
           description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto'
         }
         setAllData(old => [...old, toAppend])
-
       })
   }
   function SharePost(): any {
