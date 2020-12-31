@@ -4,7 +4,6 @@ import './App.css';
 import github from './github.svg'
 import share from './share.svg'
 import Axios from 'axios'
-const apiUrl: string = 'https://random.dog/woof.json'
 const possibleTitles: string[] = [
   "Doggo!",
   "Look at this Doggo",
@@ -16,27 +15,25 @@ interface data {
   isLiked: boolean,
   description: string
 }
-function CopyToClipboard(text: string) {
-  window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
-}
-let isActive: boolean = false
-function App() {
-  function ShareUI(props: { url: string }) {
-    if (isActive) {
-      return (
-        <div className="share-div" onClick={function () {
-          isActive = false
-        }}>
-          <div>
-            <p id='copy-id'>{props.url}</p>
-            <p onClick={function () { CopyToClipboard(props.url) }} className='copy-button'>Copy</p>
-          </div>
+function ShareUI(props: { url: string, bool: boolean }) {
+  if (props.bool) {
+    return (
+      <div className="share-div" onClick={function () {
+        props.bool = false
+      }}>
+        <div>
+          <p id='copy-id'>{props.url}</p>
+          <p onClick={function () { window.prompt("Copy to clipboard: Ctrl+C, Enter", props.url) }} className='copy-button'>Copy</p>
         </div>
-      )
-    }
-    return <></>
+      </div>
+    )
   }
+  return <></>
+}
 
+let isActive: boolean = false;
+let lastRender = Date.now()
+function App() {
 
   const [allData, setAllData] = useState<data[]>([])
   const [shareURL, setShareURL] = useState<string>("http://localhost:3000/")
@@ -45,7 +42,7 @@ function App() {
     function Like(e: any) {
       let temp = [...allData]
       temp[props.iter].isLiked = !temp[props.iter].isLiked
-      setAllData(temp)
+      setAllData(temp) // TODO:
 
       e.target.style.animation = 'Like 1s'
       setTimeout(function () { e.target.style.animation = null }, 1200);
@@ -64,16 +61,14 @@ function App() {
       )
     }
     function Heart(props: { value: boolean }) {
+      let color = '#000000'
+      let fill = 'none'
       if (props.value) {
-        return (
-          <svg className="like" onClick={Like} xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1" stroke="#ed4956" fill="#ed4956" strokeLinecap="round" strokeLinejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-          </svg>
-        )
+        color = "#ed4956"
+        fill = '#ed4956'
       }
       return (
-        <svg className="like" onClick={Like} xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <svg className="like" onClick={Like} xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1" stroke={color} fill={fill} strokeLinecap="round" strokeLinejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
         </svg>
@@ -99,7 +94,7 @@ function App() {
             </div>
             <img onClick={function () {
               isActive = true;
-              setShareURL(String(window.location.hostname + ':3000/?share=' + encodeURIComponent(props.src.img.replace("https://random.dog/", ""))))
+              setShareURL(String(window.location.hostname + ':3000/' + '?share=' + encodeURIComponent(props.src.img.replace("https://random.dog/", ""))))
             }} className='right' src={share} alt='' />
           </div>
           <p>{props.src.description}</p>
@@ -107,18 +102,16 @@ function App() {
       </div>
     )
   }
-
-  function Render(props: { arr: data[], func: Function, all: data[] }): any {
+  function Render(props: { arr: data[] }): any {
     let out: any = []
     for (let i = 0; i < props.arr.length; i++) {
       out.push(<Card key={props.arr[i].img} src={props.arr[i]} iter={i} />)
     }
     return out
   }
-
   function generate() {
     const num: number = Math.floor((Math.random() * possibleTitles.length))
-    Axios.get(apiUrl).then(
+    Axios.get('https://random.dog/woof.json').then(
       res => {
         const toAppend: data = {
           title: possibleTitles[num],
@@ -127,43 +120,43 @@ function App() {
           description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto'
         }
         setAllData(old => [...old, toAppend])
+
       })
   }
   function SharePost(): any {
     const Params = new URLSearchParams(window.location.search)
     const share = Params.get("share")
     if (share === null) {
-      return <div />
+      return <></>
     }
     const data: data = {
       title: 'Shared Post',
       img: String('https://random.dog/' + decodeURIComponent(share)),
       description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto',
-      isLiked: false
+      isLiked: true
     }
-    return [
-      <Card
-        iter={0}
-        src={data} />,
-      <div style={{ margin: '200px 0' }} />
-    ]
+    return [<Card iter={0} src={data} />, <div style={{ margin: '200px 0' }} />]
   }
 
   window.onload = function () {
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 30; i++) {
       generate()
     }
   }
   window.onscroll = function () {
-    if ((window.innerHeight + window.scrollY + 1500) >= document.body.offsetHeight) {
-      generate()
-    };
-  }
+    if ((window.innerHeight + window.scrollY + 1000) >= document.body.offsetHeight) {
+      if (Date.now() >= (lastRender + 250)) {
+        console.log('regen')
+        generate()
+        lastRender = Date.now()
+      }
+    }
+  };
   return (
     <div className='home'>
       <SharePost />
-      <Render arr={allData} all={allData} func={setAllData} />
-      <ShareUI url={shareURL} />
+      <Render arr={allData} />
+      <ShareUI url={shareURL} bool={isActive} />
     </div>
   );
 }
