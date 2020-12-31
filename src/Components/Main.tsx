@@ -19,14 +19,13 @@ export default function Main() {
     const [shareURL, setShareURL] = useState<string>("")
     const [isActive, setActive] = useState<boolean>(false)
 
-
     function ShareUI(props: { url: string }) {
         return (
             <div className="share-div" onClick={function () {
                 setActive(false)
             }}>
                 <div>
-                    <p id='copy-id'>{props.url}</p>
+                    <p>{props.url}</p>
                     <p onClick={function () { window.prompt("Copy to clipboard: Ctrl+C, Enter", props.url) }} className='copy-button'>Copy</p>
                 </div>
             </div>
@@ -36,7 +35,7 @@ export default function Main() {
 
         const [isLiked, setLiked] = useState<boolean>(props.src.isLiked)
 
-        function Like(e: any) {
+        function Like() {
             const heartsvg: any = document.getElementsByClassName('like')[props.iter]
             if (isLiked) {
                 heartsvg.style.animation = 'UndoLike 0.4s forwards'
