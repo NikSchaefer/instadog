@@ -36,6 +36,7 @@ export default function Main() {
         const [isLiked, setLiked] = useState<boolean>(props.src.isLiked)
 
         function Like() {
+            console.log('this')
             const heartsvg: any = document.getElementsByClassName('like')[props.iter]
             if (isLiked) {
                 heartsvg.style.animation = 'UndoLike 0.4s forwards'
@@ -93,7 +94,7 @@ export default function Main() {
                 <div className="card-bottom">
                     <div className='card-bottom-imgs'>
                         <Heart value={isLiked} />
-                        <img src={github} alt='' />
+                        <a href="https://github.com/NikSchaefer/InstaDog"><img src={github} alt='' /></a>
                         <img onClick={function () {
                             setActive(true)
                             setShareURL(String(window.location.hostname + '/?share=' + encodeURIComponent(props.src.img.replace("https://random.dog/", ""))))

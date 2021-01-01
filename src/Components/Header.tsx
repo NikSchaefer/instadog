@@ -3,8 +3,8 @@ import github from '../SVG/github.svg'
 export default function Main() {
     return (
         <header>
-            <p>InstaDog</p>
-            <img src={github} alt='' />
+            <a href="/#">InstaDog</a>
+            <a href="https://github.com/NikSchaefer/InstaDog"><img src={github} alt='' /></a>
         </header>
     )
 }

@@ -1,4 +1,5 @@
-body {
+body, html {
+  scroll-behavior: smooth;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -38,6 +39,7 @@ body {
 
 a {
   color: inherit;
+  text-decoration: none;
 }
 
 .card {
@@ -57,8 +59,6 @@ a {
 }
 
 .card-bottom {
-  display: flex;
-  flex-wrap: wrap;
   width: 90%;
   margin: 10px auto;
   padding: 10px 0;
@@ -76,6 +76,11 @@ a {
   display: flex;
   width: 100%;
   justify-content: space-evenly;
+}
+
+.likes {
+  font-size: 20px;
+  margin: 10px 0;
 }
 
 @keyframes Like {
