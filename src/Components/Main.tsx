@@ -9,10 +9,10 @@ interface data {
     title: string,
     img: string,
     isLiked: boolean,
-    description: string
+    description: string,
+    likes: number
 }
 let lastRender = Date.now()
-
 export default function Main() {
 
     const [FeedData, setFeed] = useState<data[]>([])
@@ -77,6 +77,12 @@ export default function Main() {
                 </svg>
             )
         }
+        function Likes(props: { value: boolean, likes: number }) {
+            if (props.value) {
+                return <p className='likes'>{String(props.likes + 1)} Likes</p>
+            }
+            return <p className='likes'>{String(props.likes)} Likes</p>
+        }
         return (
             <div className="card">
                 <div className='flex'>
@@ -86,16 +92,14 @@ export default function Main() {
                 <Img source={props.src.img} />
                 <div className="card-bottom">
                     <div className='card-bottom-imgs'>
-                        <div className="card-bottom-left">
-                            <Heart value={isLiked} />
-                            <img src={github} alt='' />
-                        </div>
+                        <Heart value={isLiked} />
+                        <img src={github} alt='' />
                         <img onClick={function () {
                             setActive(true)
                             setShareURL(String(window.location.hostname + '/?share=' + encodeURIComponent(props.src.img.replace("https://random.dog/", ""))))
                         }} className='right' src={share} alt='' />
                     </div>
-                    <p>89 Likes</p>
+                    <Likes value={isLiked} likes={props.src.likes} />
                     <p>{props.src.description}</p>
                 </div>
             </div>
@@ -108,6 +112,9 @@ export default function Main() {
         }
         return out
     }
+    function GetLikeNum() {
+        return Math.floor((Math.random() * 210))
+    }
     async function fetchNewPost() {
         const num: number = Math.floor((Math.random() * possibleTitles.length))
         const res = await Axios.get('https://random.dog/woof.json')
@@ -115,6 +122,7 @@ export default function Main() {
             title: possibleTitles[num],
             img: res.data.url,
             isLiked: false,
+            likes: GetLikeNum(),
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto'
         }
         setFeed(old => [...old, toAppend])
@@ -125,6 +133,7 @@ export default function Main() {
         if (share !== null) {
             const data: data = {
                 title: 'Shared Post',
+                likes: 97,
                 img: String('https://random.dog/' + decodeURIComponent(share)),
                 description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto',
                 isLiked: true
