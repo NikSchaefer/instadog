@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Axios from 'axios'
 
 import share from '../SVG/share.svg'
@@ -36,7 +36,6 @@ export default function Main() {
         const [isLiked, setLiked] = useState<boolean>(props.src.isLiked)
 
         function Like() {
-            console.log('this')
             const heartsvg: any = document.getElementsByClassName('like')[props.iter]
             if (isLiked) {
                 heartsvg.style.animation = 'UndoLike 0.4s forwards'
@@ -86,11 +85,12 @@ export default function Main() {
         }
         return (
             <div className="card">
-                <div className='flex'>
+                {/* <div className='flex'>
                     <div style={{ backgroundColor: 'blue' }} className='profile' />
                     <p>{props.src.title}</p>
-                </div>
+                </div> */}
                 <Img source={props.src.img} />
+                <div className='border'>
                 <div className="card-bottom">
                     <div className='card-bottom-imgs'>
                         <Heart value={isLiked} />
@@ -102,7 +102,9 @@ export default function Main() {
                     </div>
                     <Likes value={isLiked} likes={props.src.likes} />
                     <p>{props.src.description}</p>
+                    </div>
                 </div>
+
             </div>
         )
     }
@@ -128,7 +130,7 @@ export default function Main() {
         }
         setFeed(old => [...old, toAppend])
     }
-    function ShowSharedPost(): any {
+    function ShowSharedPost(): JSX.Element {
         const Params = new URLSearchParams(window.location.search)
         const share = Params.get("share")
         if (share !== null) {
@@ -139,7 +141,10 @@ export default function Main() {
                 description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto',
                 isLiked: true
             }
-            return [<Card iter={0} src={data} />, <div style={{ margin: '200px 0' }} />]
+            return <>
+                <Card iter={0} src={data} />
+                <div style={{ margin: '200px 0' }} />
+            </>
         }
         return <></>
     }

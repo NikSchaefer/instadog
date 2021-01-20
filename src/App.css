@@ -34,6 +34,7 @@ body, html {
 
 .dog-image {
   width: 100%;
+  border-radius: 20px 20px 0 0;
   min-height: 100px;
 }
 
@@ -45,10 +46,9 @@ a {
 .card {
   display: flex;
   flex-direction: column;
-  border: var(--accent) 1px solid;
   width: 95%;
   max-width: var(--width);
-  margin: 20px 0;
+  margin: 4px 0;
 }
 
 .flex {
@@ -60,8 +60,12 @@ a {
 
 .card-bottom {
   width: 90%;
-  margin: 10px auto;
-  padding: 10px 0;
+  margin: 5px auto;
+  padding: 5px 0;
+}
+
+.border {
+  border: var(--accent) 0.8px solid;
 }
 
 .card-bottom-left {
