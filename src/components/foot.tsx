@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { FaHome, FaInbox, FaBell, FaPlus } from "react-icons/fa";
+import styled from "styled-components";
 
 const Footer = styled.footer`
 	position: fixed;
