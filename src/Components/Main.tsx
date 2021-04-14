@@ -1,32 +1,33 @@
-import { useState } from 'react';
+/* eslint-disable import/no-default-export */
 import Axios from 'axios'
-
-import share from '../SVG/share.svg'
-import github from '../SVG/github.svg'
+import { useState, useEffect } from 'react';
+import { FaGithub, FaShare } from "react-icons/fa";
 
 const possibleTitles: string[] = ["Doggo!", "Look at this Doggo", "They're sooo cute!",]
-interface data {
+
+type data = {
     title: string,
     img: string,
     isLiked: boolean,
     description: string,
     likes: number
 }
-let lastRender = Date.now()
-export default function Main() {
 
+let lastRender = Date.now()
+
+export default function Main(): JSX.Element {
     const [FeedData, setFeed] = useState<data[]>([])
     const [shareURL, setShareURL] = useState<string>("")
     const [isActive, setActive] = useState<boolean>(false)
 
     function ShareUI(props: { url: string }) {
         return (
-            <div className="share-div" onClick={function () {
+            <div className="share-div" onClick={() => {
                 setActive(false)
             }}>
                 <div>
                     <p>{props.url}</p>
-                    <p onClick={function () { window.prompt("Copy to clipboard: Ctrl+C, Enter", props.url) }} className='copy-button'>Copy</p>
+                    <p onClick={() => { window.prompt("Copy to clipboard: Ctrl+C, Enter", props.url) }} className='copy-button'>Copy</p>
                 </div>
             </div>
         )
@@ -43,7 +44,7 @@ export default function Main() {
             else {
                 heartsvg.style.animation = 'Like 0.4s forwards'
             }
-            setTimeout(function () {
+            setTimeout(() => {
                 setLiked(!isLiked)
             }, 400)
 
@@ -84,37 +85,54 @@ export default function Main() {
             return <p className='likes'>{String(props.likes)} Likes</p>
         }
         return (
-            <div className="card">
-                {/* <div className='flex'>
+			<div className="card">
+				{/* <div className='flex'>
                     <div style={{ backgroundColor: 'blue' }} className='profile' />
                     <p>{props.src.title}</p>
                 </div> */}
-                <Img source={props.src.img} />
-                <div className='border'>
-                <div className="card-bottom">
-                    <div className='card-bottom-imgs'>
-                        <Heart value={isLiked} />
-                        <a href="https://github.com/NikSchaefer/InstaDog"><img src={github} alt='' /></a>
-                        <img onClick={function () {
-                            setActive(true)
-                            setShareURL(String(window.location.hostname + '/?share=' + encodeURIComponent(props.src.img.replace("https://random.dog/", ""))))
-                        }} className='right' src={share} alt='' />
-                    </div>
-                    <Likes value={isLiked} likes={props.src.likes} />
-                    <p>{props.src.description}</p>
-                    </div>
-                </div>
-
-            </div>
-        )
+				<Img source={props.src.img} />
+				<div className="border">
+					<div className="card-bottom">
+						<div className="card-bottom-imgs">
+							<Heart value={isLiked} />
+							<a href="https://github.com/NikSchaefer/InstaDog">
+								<FaGithub size={30} />
+							</a>
+							<FaShare
+								size={30}
+								onClick={() => {
+									setActive(true);
+									setShareURL(
+										String(
+											`${window.location.hostname 
+												}/?share=${ 
+												encodeURIComponent(
+													props.src.img.replace(
+														"https://random.dog/",
+														""
+													)
+												)}`
+										)
+									);
+								}}
+								className="right"
+							/>
+						</div>
+						<Likes value={isLiked} likes={props.src.likes} />
+						<p>{props.src.description}</p>
+					</div>
+				</div>
+			</div>
+		);
     }
-    function Render(props: { arr: data[] }): any {
-        let out: any = []
+    function Render(props: { arr: data[] }): unknown {
+        const out: Array = []
         for (let i = 0; i < props.arr.length; i++) {
             out.push(<Card key={i} src={props.arr[i]} iter={i} />)
         }
         return out
     }
+    // eslint-disable-next-line unicorn/consistent-function-scoping
     function GetLikeNum() {
         return Math.floor((Math.random() * 210))
     }
@@ -137,7 +155,7 @@ export default function Main() {
             const data: data = {
                 title: 'Shared Post',
                 likes: 97,
-                img: String('https://random.dog/' + decodeURIComponent(share)),
+                img: String(`https://random.dog/${decodeURIComponent(share)}`),
                 description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto',
                 isLiked: true
             }
@@ -148,24 +166,26 @@ export default function Main() {
         }
         return <></>
     }
-    window.onload = function () {
+    useEffect(() => {
         for (let i = 0; i < 30; i++) {
-            fetchNewPost()
+            // eslint-disable-next-line no-void
+            void fetchNewPost()
         }
-    }
-    window.onscroll = function () {
-        if ((window.innerHeight + window.scrollY + 2000) >= document.body.offsetHeight) {
-            if (Date.now() >= (lastRender + 10000)) {
+    }, [])
+
+        
+    window.addEventListener('scroll', () => {
+        if ((window.innerHeight + window.scrollY + 2000) >= document.body.offsetHeight && Date.now() >= (lastRender + 10_000)) {
                 for (let i = 0; i < 20; i++) {
                     if (FeedData.length > 100) {
                         // Delte old posts
                     }
-                    fetchNewPost()
+                    // eslint-disable-next-line no-void
+                    void fetchNewPost()
                 }
                 lastRender = Date.now()
             }
-        }
-    };
+    });
     return (
         <div className='home'>
             <ShowSharedPost />
