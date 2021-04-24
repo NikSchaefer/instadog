@@ -1,7 +1,10 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable no-alert */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable import/no-default-export */
-import Axios from "axios";
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { FaGithub, FaShare } from "react-icons/fa";
 
@@ -193,7 +196,7 @@ export default function Main(): JSX.Element {
 	}
 	async function fetchNewPost() {
 		const num: number = Math.floor(Math.random() * possibleTitles.length);
-		const res = await Axios.get("https://random.dog/woof.json");
+		const res = await axios.get("https://random.dog/woof.json");
 		const toAppend: data = {
 			title: possibleTitles[num],
 			img: res.data.url,
