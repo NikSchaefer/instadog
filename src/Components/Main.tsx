@@ -59,7 +59,8 @@ export default function Main(): JSX.Element {
 		const [isLiked, setLiked] = useState<boolean>(props.src.isLiked);
 
 		function Like() {
-			const heartsvg: Element =
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const heartsvg: any =
 				document.querySelectorAll(".like")[props.iter];
 			if (isLiked) {
 				heartsvg.style.animation = "UndoLike 0.4s forwards";
