@@ -5,6 +5,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable import/no-default-export */
 import axios from "axios";
+import { type } from "os";
 import { useState, useEffect } from "react";
 import { FaGithub, FaShare } from "react-icons/fa";
 
@@ -203,6 +204,9 @@ export default function Main(): JSX.Element {
 		setFeed((old) => [...old, toAppend]);
 	}
 	function ShowSharedPost(): JSX.Element {
+		if (typeof window === undefined) {
+			return <></>;
+		}
 		const Params = new URLSearchParams(window.location.search);
 		const share = Params.get("share");
 		if (share !== null) {
