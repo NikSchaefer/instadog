@@ -145,10 +145,6 @@ export default function Main(): JSX.Element {
 		}
 		return (
 			<div className="card">
-				{/* <div className='flex'>
-                    <div style={{ backgroundColor: 'blue' }} className='profile' />
-                    <p>{props.src.title}</p>
-                </div> */}
 				<Img source={props.src.img} />
 				<div className="border">
 					<div className="card-bottom">
@@ -163,9 +159,7 @@ export default function Main(): JSX.Element {
 									setActive(true);
 									setShareURL(
 										String(
-											`${
-												window.location.hostname
-											}/?share=${encodeURIComponent(
+											`https://instadog.vercel.app/?share=${encodeURIComponent(
 												props.src.img.replace(
 													"https://random.dog/",
 													""
@@ -234,25 +228,26 @@ export default function Main(): JSX.Element {
 			// eslint-disable-next-line no-void
 			void fetchNewPost();
 		}
+		window.addEventListener("scroll", () => {
+			if (
+				window.innerHeight + window.scrollY + 2000 >=
+					document.body.offsetHeight &&
+				Date.now() >= lastRender + 10_000
+			) {
+				for (let i = 0; i < 20; i++) {
+					if (FeedData.length > 100) {
+						// Delte old posts
+					}
+					// eslint-disable-next-line no-void
+					void fetchNewPost();
+				}
+				lastRender = Date.now();
+			}
+		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	window.addEventListener("scroll", () => {
-		if (
-			window.innerHeight + window.scrollY + 2000 >=
-				document.body.offsetHeight &&
-			Date.now() >= lastRender + 10_000
-		) {
-			for (let i = 0; i < 20; i++) {
-				if (FeedData.length > 100) {
-					// Delte old posts
-				}
-				// eslint-disable-next-line no-void
-				void fetchNewPost();
-			}
-			lastRender = Date.now();
-		}
-	});
 	return (
 		<div className="home">
 			<ShowSharedPost />
