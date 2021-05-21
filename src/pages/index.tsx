@@ -1,6 +1,6 @@
-import Main from "@components/main";
-import Foot from "@components/foot";
-import Head from "@components/head";
+import Main from "../Components/Main";
+import Foot from "../Components/foot";
+import Head from "../Components/head";
 
 export default function Home(): JSX.Element {
 	return (

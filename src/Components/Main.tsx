@@ -24,6 +24,7 @@ type data = {
 
 let lastRender = Date.now();
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function Main(): JSX.Element {
 	const [FeedData, setFeed] = useState<data[]>([]);
 	const [shareURL, setShareURL] = useState<string>("");
@@ -58,9 +59,8 @@ export default function Main(): JSX.Element {
 		const [isLiked, setLiked] = useState<boolean>(props.src.isLiked);
 
 		function Like() {
-			const heartsvg: Element = document.querySelectorAll(".like")[
-				props.iter
-			];
+			const heartsvg: Element =
+				document.querySelectorAll(".like")[props.iter];
 			if (isLiked) {
 				heartsvg.style.animation = "UndoLike 0.4s forwards";
 			} else {
@@ -183,12 +183,12 @@ export default function Main(): JSX.Element {
 			</div>
 		);
 	}
-	function Render(props: { arr: data[] }): JSX.Element[] {
+	function Render(props: { arr: data[] }): JSX.Element {
 		const out: JSX.Element[] = [];
 		for (let i = 0; i < props.arr.length; i++) {
 			out.push(<Card key={i} src={props.arr[i]} iter={i} />);
 		}
-		return out;
+		return <>{out}</>;
 	}
 	// eslint-disable-next-line unicorn/consistent-function-scoping
 	function getLikeNum() {
