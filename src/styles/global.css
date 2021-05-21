@@ -1,10 +1,43 @@
-html,
-body {
-	padding: 0;
+body,
+html {
+	scroll-behavior: smooth;
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-	color: rgba(29, 29, 29, 0.897);
+	font-family: -apple-system, BlinkMacSystemFont, "Fira Sans", "Droid Sans",
+		"Helvetica Neue", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+	--width: 500px;
+	--accent: rgb(194, 194, 194);
+}
+
+.button {
+	background-color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	transform: scale(1.2);
+	margin-top: 50px;
+}
+
+.button:hover {
+	background-color: var(--accent);
+	cursor: pointer;
+}
+
+.home {
+	margin: 50px 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.dog-image {
+	width: 100%;
+	border-radius: 20px 20px 0 0;
+	min-height: 100px;
 }
 
 a {
@@ -12,6 +45,154 @@ a {
 	text-decoration: none;
 }
 
-ul {
-	list-style: none;
+.card {
+	display: flex;
+	flex-direction: column;
+	width: 95%;
+	max-width: var(--width);
+	margin: 4px 0;
+}
+
+.flex {
+	display: flex;
+	width: 90%;
+	margin: auto;
+	padding: 10px 0;
+}
+
+.card-bottom {
+	width: 90%;
+	margin: 5px auto;
+	padding: 5px 0;
+}
+
+.border {
+	border: var(--accent) 0.8px solid;
+}
+
+.card-bottom-left {
+	display: flex;
+}
+
+.right {
+	margin-left: auto;
+}
+
+.card-bottom-imgs {
+	display: flex;
+	width: 100%;
+	justify-content: space-evenly;
+}
+
+.likes {
+	font-size: 20px;
+	margin: 10px 0;
+}
+
+@keyframes Like {
+	0% {
+		transform: scale(1);
+		fill: white;
+	}
+	50% {
+		transform: scale(1.2);
+	}
+	100% {
+		transform: scale(1);
+		fill: #ed4956;
+		stroke: #ed4956;
+	}
+}
+
+@keyframes UndoLike {
+	0% {
+		transform: scale(1);
+		fill: #ed4956;
+	}
+	50% {
+		transform: scale(1.2);
+	}
+	100% {
+		transform: scale(1);
+		fill: white;
+	}
+}
+
+.profile {
+	border-radius: 1000px;
+	height: 40px;
+	width: 40px;
+	margin-right: 20px;
+}
+
+.share-div {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.555);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.share-div div {
+	background-color: white;
+	border-radius: 10px;
+	padding: 20px 30px;
+	font-size: 23px;
+	display: flex;
+	flex-wrap: wrap;
+	background-color: white;
+}
+
+.copy-button {
+	text-transform: uppercase;
+	margin-left: 20px;
+	color: rgb(0, 119, 255);
+}
+
+.copy-button:hover {
+	cursor: pointer;
+}
+
+header {
+	top: 0;
+	height: 45px;
+	padding: 0 5%;
+	border-bottom: var(--accent) solid 1px;
+	justify-content: space-evenly;
+	font-size: 22px;
+	font-family: cursive;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.089);
+}
+
+header img {
+	width: 30px;
+}
+
+header,
+footer {
+	position: fixed;
+	background-color: rgb(255, 255, 255);
+	align-items: center;
+	display: flex;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+footer {
+	border-radius: 30px 30px 0 0;
+	padding: 15px 40px;
+	bottom: 0;
+	max-width: var(--width);
+	box-shadow: 0 -2px 10px -1px rgba(0, 0, 0, 0.205);
+	justify-content: space-between;
+	left: 50%;
+	transform: translate(-50%, 0);
+}
+
+footer img {
+	width: 24px;
 }
