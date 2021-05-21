@@ -1,6 +1,6 @@
 import "@styles/global.css";
-import Footer from "@components/foot";
-import Header from "@components/head";
+import Footer from "component/foot";
+import Header from "component/head";
 import { META } from "@config";
 import { pageview } from "@lib/gtag";
 import type { AppProps } from "next/app";
