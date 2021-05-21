@@ -5,7 +5,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable import/no-default-export */
 import axios from "axios";
-import { type } from "os";
 import { useState, useEffect } from "react";
 import { FaGithub, FaShare } from "react-icons/fa";
 
