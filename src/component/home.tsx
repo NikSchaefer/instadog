@@ -4,6 +4,7 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable import/no-default-export */
+import { IS_BROWSER } from "@config";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { FaGithub, FaShare } from "react-icons/fa";
@@ -203,7 +204,7 @@ export default function Main(): JSX.Element {
 		setFeed((old) => [...old, toAppend]);
 	}
 	function ShowSharedPost(): JSX.Element {
-		if (typeof window === undefined) {
+		if (!IS_BROWSER) {
 			return <></>;
 		}
 		const Params = new URLSearchParams(window.location.search);
