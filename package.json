@@ -35,7 +35,7 @@
 		"@types/react": "^17.0.38",
 		"@types/styled-components": "^5.1.20",
 		"babel-plugin-styled-components": "^2.0.2",
-		"eslint": "^8.5.0",
+		"eslint": "^8.6.0",
 		"eslint-config-galex": "^3.5.5",
 		"prettier": "^2.5.1"
 	}
