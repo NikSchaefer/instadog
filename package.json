@@ -21,7 +21,7 @@
 		"@types/react-icons": "^3.0.0",
 		"axios": "^0.26.1",
 		"next": "12.1.6",
-		"react": "^18.0.0",
+		"react": "^18.1.0",
 		"react-dom": "18.0.0",
 		"react-icons": "^4.3.1",
 		"styled-components": "^5.3.5",
