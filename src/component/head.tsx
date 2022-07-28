@@ -18,6 +18,7 @@ const Header = styled.header`
 	font-size: 22px;
 	font-family: cursive;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.089);
+	z-index: 1;
 `;
 const StyledLink = styled.a`
 	margin: 0 20px;
