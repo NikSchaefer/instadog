@@ -1,16 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body,
 html {
 	scroll-behavior: smooth;
-	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Fira Sans", "Droid Sans",
-		"Helvetica Neue", sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-:root {
-	--width: 500px;
-	--accent: rgb(194, 194, 194);
+	background: rgb(250, 250, 250);
 }
 
 .button {
@@ -34,59 +29,9 @@ html {
 	align-items: center;
 }
 
-.dog-image {
-	width: 100%;
-	border-radius: 20px 20px 0 0;
-	min-height: 100px;
-}
-
 a {
 	color: inherit;
 	text-decoration: none;
-}
-
-.card {
-	display: flex;
-	flex-direction: column;
-	width: 95%;
-	max-width: var(--width);
-	margin: 4px 0;
-}
-
-.flex {
-	display: flex;
-	width: 90%;
-	margin: auto;
-	padding: 10px 0;
-}
-
-.card-bottom {
-	width: 90%;
-	margin: 5px auto;
-	padding: 5px 0;
-}
-
-.border {
-	border: var(--accent) 0.8px solid;
-}
-
-.card-bottom-left {
-	display: flex;
-}
-
-.right {
-	margin-left: auto;
-}
-
-.card-bottom-imgs {
-	display: flex;
-	width: 100%;
-	justify-content: space-evenly;
-}
-
-.likes {
-	font-size: 20px;
-	margin: 10px 0;
 }
 
 @keyframes Like {

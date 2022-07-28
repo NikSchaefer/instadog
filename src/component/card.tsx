@@ -1,8 +1,11 @@
 import clsx from "clsx";
 import useDidUpdateEffect from "hooks/useDidUpdateEffect";
 import { useRef, useState } from "react";
-import { FaGithub, FaShare } from "react-icons/fa";
+import { AiOutlineShareAlt } from "react-icons/ai";
+import { GoMarkGithub } from "react-icons/go";
 import { PostType } from "types";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
+import { SiGithubsponsors } from "react-icons/si";
 
 function Img({
 	source,
@@ -17,7 +20,7 @@ function Img({
 			<video
 				preload="none"
 				onDoubleClick={() => doubleClick()}
-				className="dog-image"
+				className="w-full min-h-[100px]"
 				autoPlay
 				loop
 				muted
@@ -29,16 +32,27 @@ function Img({
 	return (
 		<img
 			loading="lazy"
-			onDoubleClick={() => doubleClick()}
+			onDoubleClick={() => {
+				console.log("here");
+				doubleClick();
+			}}
 			src={source}
-			className="dog-image"
+			className="w-full min-h-[100px]"
 			alt="loading... maybe"
 		/>
 	);
 }
 
-function Heart({ liked, onClick }: { liked: boolean; onClick: Function }) {
-	const ref = useRef<SVGSVGElement>(null);
+function Heart({
+	liked,
+	onClick,
+	size,
+}: {
+	liked: boolean;
+	onClick: Function;
+	size: number;
+}) {
+	const ref = useRef<HTMLDivElement>(null);
 
 	useDidUpdateEffect(() => {
 		if (!ref) return;
@@ -52,23 +66,16 @@ function Heart({ liked, onClick }: { liked: boolean; onClick: Function }) {
 	}, [liked]);
 
 	return (
-		<svg
-			ref={ref}
-			fill={clsx(liked ? "#ed4956" : "#fff")}
-			stroke={clsx(liked ? "#ed4956" : "#000")}
-			className="like"
-			onClick={() => onClick()}
-			xmlns="http://www.w3.org/2000/svg"
-			width="44"
-			height="44"
-			viewBox="0 0 24 24"
-			strokeWidth="1"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-		>
-			<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-			<path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-		</svg>
+		<div ref={ref}>
+			<SiGithubsponsors
+				color={clsx(liked ? "#ed4956" : "#000")}
+				fill={clsx(liked ? "#ed4956" : "#000")}
+				stroke={clsx(liked ? "#ed4956" : "#000")}
+				strokeWidth={"0px"}
+				onClick={() => onClick()}
+				size={size}
+			/>
+		</div>
 	);
 }
 
@@ -82,20 +89,34 @@ export function Card({
 	const [isLiked, setLiked] = useState<boolean>(false);
 
 	return (
-		<div className="card">
+		<div className="flex flex-col w-[90%] mx-auto my-4">
+			<div className="flex bg-white p-4 rounded-t-lg border justify-between items-center">
+				<div className="flex items-center">
+					<img
+						className="w-10 h-10 rounded-full"
+						src={`/profile/${post.profile}.jpg`}
+					/>
+					<p className="ml-2 font-semibold text-sm">{post.name}</p>
+				</div>
+				<BiDotsHorizontalRounded size={20} />
+			</div>
 			<Img doubleClick={() => setLiked(true)} source={post.img} />
-			<div className="border">
-				<div className="card-bottom">
-					<div className="card-bottom-imgs">
+			<div className="border rounded-b-lg py-2">
+				<div className="w-[90%] mx-auto p-1">
+					<div className="flex items-center">
 						<Heart
 							onClick={() => setLiked(!isLiked)}
 							liked={isLiked}
+							size={25}
 						/>
-						<a href="https://github.com/NikSchaefer/InstaDog">
-							<FaGithub size={30} />
+						<a
+							className="ml-2"
+							href="https://github.com/NikSchaefer/InstaDog"
+						>
+							<GoMarkGithub size={25} />
 						</a>
-						<FaShare
-							size={30}
+						<AiOutlineShareAlt
+							size={25}
 							onClick={() => {
 								setShareURL(
 									String(
@@ -108,13 +129,37 @@ export function Card({
 									)
 								);
 							}}
-							className="right"
+							className="ml-auto"
 						/>
 					</div>
-					<p className="likes">
-						{String(isLiked ? post.likes + 1 : post.likes)} Likes
+					<div className="flex items-center">
+						{post.attention.map((profile, i) => (
+							<img
+								style={{
+									transform: `translateX(-${7 * i}px)`,
+								}}
+								className="!w-8 h-8 rounded-full border-2 border-white "
+								src={`/profile/${profile}.jpg`}
+							/>
+						))}
+						<p className="text-base my-2">
+							Liked by{" "}
+							<span className="font-semibold">
+								{String(isLiked ? post.likes + 1 : post.likes)}{" "}
+								others
+							</span>
+						</p>
+					</div>
+
+					<p>
+						<span className="font-semibold">{post.name}</span>{" "}
+						{post.description}
 					</p>
-					<p>{post.description}</p>
+					<p className="text-gray-500 text-sm pt-1">
+						{post.days > 1
+							? `${post.days} days ago`
+							: `${post.days} day ago`}
+					</p>
 				</div>
 			</div>
 		</div>

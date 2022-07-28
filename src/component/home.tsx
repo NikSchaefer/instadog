@@ -5,11 +5,39 @@ import InfiniteScroll from "react-infinite-scroller";
 import { PostType } from "types";
 import { ShareUI, ShowSharedPost } from "./share";
 
-const possibleTitles: string[] = [
-	"Doggo!",
-	"Look at this Doggo",
-	"They're sooo cute!",
+const possibleDescriptions: string[] = [
+	"Look at this doggo!",
+	"Had a great time with this doggo!",
+	"This doggo is so cute!",
+	"Love this doggo!",
 ];
+
+const possibleNames = [
+	"Doggo.4000",
+	"doge.master",
+	"nik.schaefer",
+	"dogs.are.awesome",
+	"doggo.is.awesome",
+	"doggo.is.cute",
+];
+
+function getLikeNum() {
+	return Math.floor(Math.random() * 100);
+}
+function getDays() {
+	return Math.floor(Math.random() * 10 + 1);
+}
+function getProfile() {
+	return Math.floor(Math.random() * 9 + 1);
+}
+
+function getAttention() {
+	return [
+		Math.floor(Math.random() * 9 + 1),
+		Math.floor(Math.random() * 9 + 1),
+		Math.floor(Math.random() * 9 + 1),
+	];
+}
 
 export default function Main(): JSX.Element {
 	const [items, setItems] = useState<PostType[]>([]);
@@ -20,14 +48,19 @@ export default function Main(): JSX.Element {
 	async function fetchNewPost(): Promise<PostType> {
 		const res = await axios.get("https://random.dog/woof.json");
 
-		const num = Math.floor(Math.random() * possibleTitles.length);
+		const name = Math.floor(Math.random() * possibleNames.length);
+		const description = Math.floor(
+			Math.random() * possibleDescriptions.length
+		);
 		return {
-			title: possibleTitles[num],
+			name: possibleNames[name],
 			img: res.data.url,
 			isLiked: false,
 			likes: getLikeNum(),
-			description:
-				"Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto",
+			days: getDays(),
+			description: possibleDescriptions[description],
+			profile: getProfile(),
+			attention: getAttention(),
 		};
 	}
 
@@ -46,21 +79,20 @@ export default function Main(): JSX.Element {
 		});
 	}, [items, fetching]);
 
-	function getLikeNum() {
-		return Math.floor(Math.random() * 100);
-	}
-
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
 		const share = params.get("share");
 		if (share !== null) {
 			setSharePost({
-				title: "Shared Post",
+				name: "Shared Post",
 				likes: 97,
 				img: String(`https://random.dog/${decodeURIComponent(share)}`),
 				description:
 					"Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti iusto",
 				isLiked: true,
+				days: getDays(),
+				profile: getProfile(),
+				attention: getAttention(),
 			});
 		}
 	}, []);
