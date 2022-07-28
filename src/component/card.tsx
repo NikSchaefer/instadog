@@ -89,7 +89,7 @@ export function Card({
 	const [isLiked, setLiked] = useState<boolean>(false);
 
 	return (
-		<div className="flex flex-col w-[90%] mx-auto my-4">
+		<div className="flex flex-col w-[90%] mx-auto my-4 max-w-[500px]">
 			<div className="flex bg-white p-4 rounded-t-lg border justify-between items-center">
 				<div className="flex items-center">
 					<img
