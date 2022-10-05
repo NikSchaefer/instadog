@@ -20,7 +20,7 @@
 		"@babel/core": "^7.19.0",
 		"@types/axios": "^0.14.0",
 		"@types/react-icons": "^3.0.0",
-		"autoprefixer": "^10.4.8",
+		"autoprefixer": "^10.4.12",
 		"axios": "^1.0.0",
 		"clsx": "^1.2.1",
 		"next": "12.2.5",
