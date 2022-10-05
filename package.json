@@ -21,7 +21,7 @@
 		"@types/axios": "^0.14.0",
 		"@types/react-icons": "^3.0.0",
 		"autoprefixer": "^10.4.8",
-		"axios": "^0.27.2",
+		"axios": "^1.0.0",
 		"clsx": "^1.2.1",
 		"next": "12.2.5",
 		"postcss": "^8.4.16",
