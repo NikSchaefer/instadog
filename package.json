@@ -37,7 +37,7 @@
 		"@babel/preset-typescript": "^7.21.0",
 		"@types/babel__core": "^7.20.0",
 		"@types/jest": "^29.4.0",
-		"@types/node": "^18.14.1",
+		"@types/node": "^18.15.1",
 		"@types/react": "^18.0.28",
 		"@types/react-infinite-scroller": "^1.2.3",
 		"@types/styled-components": "^5.1.26",
