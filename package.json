@@ -38,7 +38,7 @@
 		"@types/babel__core": "^7.20.0",
 		"@types/jest": "^29.5.1",
 		"@types/node": "^20.2.4",
-		"@types/react": "^18.2.0",
+		"@types/react": "^18.2.7",
 		"@types/react-infinite-scroller": "^1.2.3",
 		"@types/styled-components": "^5.1.26",
 		"babel-plugin-styled-components": "^2.1.3",
