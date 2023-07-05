@@ -7,6 +7,7 @@ type PostType = {
 	days: number;
 	profile: number;
 	attention: number[];
+	location: string;
 };
 
 export type { PostType };
