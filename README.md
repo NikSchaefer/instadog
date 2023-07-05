@@ -5,7 +5,8 @@ because who can resist cute dogs?
 
 ## Showcase
 
-![Dogstagram Demo](demo.gif)
+![Descriptive Image](https://raw.githubusercontent.com/NikSchaefer/instadog/main/public/descriptive-image.png)
+![Descriptive Image 2](https://raw.githubusercontent.com/NikSchaefer/instadog/main/public/descriptive-image-2.png)
 
 ## Features
 
