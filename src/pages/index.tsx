@@ -1,13 +1,13 @@
-import Foot from "../component/foot";
-import Head from "../component/head";
+import Footer from "../component/footer";
+import Header from "../component/header";
 import Main from "../component/home";
 
 export default function Home(): JSX.Element {
 	return (
 		<>
-			<Head />
+			<Header />
 			<Main />
-			<Foot />
+			<Footer />
 		</>
 	);
 }
