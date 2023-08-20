@@ -19,7 +19,7 @@
 	"dependencies": {
 		"@babel/core": "^7.21.8",
 		"@types/axios": "^0.14.0",
-		"autoprefixer": "^10.4.14",
+		"autoprefixer": "^10.4.15",
 		"axios": "^1.4.0",
 		"clsx": "^2.0.0",
 		"lucide-react": "^0.268.0",
