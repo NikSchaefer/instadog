@@ -22,7 +22,7 @@
 		"autoprefixer": "^10.4.15",
 		"axios": "^1.4.0",
 		"clsx": "^2.0.0",
-		"lucide-react": "^0.268.0",
+		"lucide-react": "^0.290.0",
 		"next": "13.4.18",
 		"next-seo": "^6.1.0",
 		"postcss": "^8.4.31",
