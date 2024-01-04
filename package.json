@@ -20,7 +20,7 @@
 		"@babel/core": "^7.23.7",
 		"@types/axios": "^0.14.0",
 		"autoprefixer": "^10.4.15",
-		"axios": "^1.6.3",
+		"axios": "^1.6.4",
 		"clsx": "^2.1.0",
 		"lucide-react": "^0.302.0",
 		"next": "13.5.6",
